@@ -1,0 +1,2 @@
+body{background:#f4f7fb;color:#172033}.navbar-brand{font-weight:800}.card{border:0;box-shadow:0 8px 24px rgba(31,45,61,.07)}.topic-card{transition:.2s}.topic-card:hover{transform:translateY(-3px)}.auth-shell{max-width:620px}.content-shell{min-height:calc(100vh - 72px)}
+@media(max-width:575.98px){.auth-shell{padding:1rem}.navbar .nav-link{padding:.5rem 0}}

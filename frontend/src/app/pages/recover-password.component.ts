@@ -1,0 +1,8 @@
+import { Component,inject } from '@angular/core'; import { CommonModule } from '@angular/common'; import { ReactiveFormsModule,FormBuilder,Validators } from '@angular/forms'; import { RouterLink } from '@angular/router'; import { ForumService } from '../forum.service'; import { passwordStrength } from '../password.validators';
+@Component({standalone:true,imports:[CommonModule,ReactiveFormsModule,RouterLink],template:`<div class="container py-5"><div class="row justify-content-center"><div class="col-12 col-md-9 col-lg-7"><section class="card p-4"><h1 class="h3">Recuperar contraseña</h1><form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+ <div class="mb-3"><label class="form-label">Correo</label><input class="form-control" type="email" formControlName="email"></div><div class="mb-3"><label class="form-label">Nueva contraseña</label><input class="form-control" type="password" formControlName="password"></div>
+ <div class="alert alert-danger" *ngIf="error">El correo no existe.</div><div class="alert alert-success" *ngIf="success">Contraseña restablecida.</div><button class="btn btn-primary w-100" [disabled]="form.invalid">Restablecer</button></form><a routerLink="/login" class="d-block mt-3">Volver al inicio de sesión</a></section></div></div></div>`})
+export class RecoverPasswordComponent{private fb=inject(FormBuilder);private forum=inject(ForumService);error=false;success=false;
+ form=this.fb.nonNullable.group({email:['',[Validators.required,Validators.email]],password:['',[Validators.required,passwordStrength]]});
+ submit(){if(this.form.invalid)return;const v=this.form.getRawValue();this.error=!this.forum.resetPassword(v.email,v.password);this.success=!this.error}
+}

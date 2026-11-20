@@ -1,0 +1,14 @@
+server:
+  port: 8082
+spring:
+  datasource:
+    url: ${ORACLE_URL:jdbc:oracle:thin:@<TNS_ALIAS>?TNS_ADMIN=/app/wallet}
+    username: ${ORACLE_USER:<USUARIO_ORACLE>}
+    password: ${ORACLE_PASSWORD:<CLAVE_ORACLE>}
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
