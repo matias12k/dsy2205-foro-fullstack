@@ -25,7 +25,7 @@ CREATE TABLE usuario (
   password VARCHAR2(255) NOT NULL,
   rol_id NUMBER NOT NULL,
   activo NUMBER(1) DEFAULT 1 NOT NULL,
-  fecha_creacion TIMESTAMP DEFAULT SYSTIMESTAMP,
+  fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT SYSTIMESTAMP,
   CONSTRAINT fk_usuario_rol FOREIGN KEY (rol_id) REFERENCES rol(id)
 );
 
@@ -42,7 +42,7 @@ CREATE TABLE tema (
   categoria_id NUMBER NOT NULL,
   usuario_id NUMBER NOT NULL,
   oculto NUMBER(1) DEFAULT 0 NOT NULL,
-  fecha_creacion TIMESTAMP DEFAULT SYSTIMESTAMP,
+  fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT SYSTIMESTAMP,
   CONSTRAINT fk_tema_categoria FOREIGN KEY (categoria_id) REFERENCES categoria(id),
   CONSTRAINT fk_tema_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
@@ -53,7 +53,7 @@ CREATE TABLE comentario (
   tema_id NUMBER NOT NULL,
   usuario_id NUMBER NOT NULL,
   oculto NUMBER(1) DEFAULT 0 NOT NULL,
-  fecha_creacion TIMESTAMP DEFAULT SYSTIMESTAMP,
+  fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT SYSTIMESTAMP,
   CONSTRAINT fk_comentario_tema FOREIGN KEY (tema_id) REFERENCES tema(id) ON DELETE CASCADE,
   CONSTRAINT fk_comentario_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
@@ -86,3 +86,4 @@ INSERT INTO comentario(contenido,tema_id,usuario_id) VALUES
 INSERT INTO comentario(contenido,tema_id,usuario_id) VALUES
  ('La documentación oficial de Angular es un buen punto de partida.',1,(SELECT id FROM usuario WHERE email='admin@foro.cl'));
 
+COMMIT;
