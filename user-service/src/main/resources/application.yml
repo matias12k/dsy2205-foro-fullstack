@@ -1,14 +1,10 @@
-server:
-  port: 8081
 spring:
   datasource:
-    url: ${ORACLE_URL:jdbc:oracle:thin:@<TNS_ALIAS>?TNS_ADMIN=/app/wallet}
-    username: ${ORACLE_USER:<USUARIO_ORACLE>}
-    password: ${ORACLE_PASSWORD:<CLAVE_ORACLE>}
+    url: jdbc:oracle:thin:@//oracle-db:1521/FREEPDB1
+    username: foro_user
+    password: ForoPassword123
     driver-class-name: oracle.jdbc.OracleDriver
   jpa:
     hibernate:
-      ddl-auto: validate
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.OracleDialect
+      ddl-auto: none
+    show-sql: true

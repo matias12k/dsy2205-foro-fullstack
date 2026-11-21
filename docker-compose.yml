@@ -1,13 +1,38 @@
 services:
+  oracle-db:
+    image: gvenzl/oracle-free:23-slim
+    container_name: oracle-db-local
+    ports:
+      - "1521:1521"
+    environment:
+      - ORACLE_PASSWORD=OraclePassword123
+      - APP_USER=foro_user
+      - APP_USER_PASSWORD=ForoPassword123
+    volumes:
+      - ./database/schema_and_data.sql:/container-entrypoint-initdb.d/01_schema_and_data.sql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "8081:8080"
+    depends_on:
+      oracle-db:
+        condition: service_healthy
+
+  forum-service:
+    build: ./forum-service
+    ports:
+      - "8082:8080"
+    depends_on:
+      oracle-db:
+        condition: service_healthy
+
   frontend:
     build: ./frontend
     ports:
       - "4200:80"
-  user-service:
-    build: ./user-service
-    ports:
-      - "8081:8081"
-  forum-service:
-    build: ./forum-service
-    ports:
-      - "8082:8082"
